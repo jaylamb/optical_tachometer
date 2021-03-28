@@ -133,15 +133,15 @@ function(add_avr_executable EXECUTABLE_NAME)
         COMMENT "Get fuses from ${AVR_MCU}"
     )
 
-    # Still FE: Get oscillator calibration
+    # get oscillator calibration
     add_custom_target(
         get_calibration
             ${AVR_UPLOADTOOL} -p ${AVR_MCU} -c ${AVR_PROGRAMMER} -P ${AVR_UPLOADTOOL_PORT}
             -U calibration:r:${AVR_MCU}_calib.tmp:r
-            COMMENT "Program caibration status of internal oscillator from ${AVR_MCU}_calib.hex"
+            COMMENT "Program calibration status of internal oscillator from ${AVR_MCU}_calib.hex"
     )
 
-    # Set oscillator calibration
+    # set oscillator calibration
     add_custom_target(
         set_calibration
         ${AVR_UPLOADTOOL} -p ${AVR_MCU} -c ${AVR_PROGRAMMER} -P ${AVR_UPLOADTOOL_PORT}
