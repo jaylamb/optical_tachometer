@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+# optical_tachometer
+
+#  Copyright 2021 Jay Lamb, jaylamb@gmail.com
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+#File: git/hooks/install
+#Description: Git hook install script
+
+function error()
+{
+	>&2 echo "$script_name: $1"
+}
+
+function abort()
+{
+	if [[ "$#" -gt 0 ]]; then
+		error "$1, aborting"
+	fi
+
+	exit 1
+}
+
+function display_help_text()
+{
+	echo "NAME"
+	echo "	$script_name - Install this repository's Git hooks."
+	echo "SYNOPSIS"
+	echo "	$script_name --help"
+	echo "	$script_name"
+	echo "OPTIONS"
+	echo "	--help"
+	echo "		Display this help text."
+	echo "EXAMPLES"
+	echo "	$script_name --help"
+	echo "	$script_name"
+}
+
+function install_hooks()
+{
+	while [[ "$#" -gt 0 ]]; do
+		local hook="$1"
+		shift
+
+		rm -f "$repository_dir/.git/hooks/$hook"
+
+		if ! ln -s "$hooks_dir/$hook" "$repository_dir/.git/hooks/$hook"; then
+			abort "'$hook' installation failed"
+		fi
+	done
+}
+
+function main()
+{
+	script_dir=$( readlink -f "$0" ); readonly script_dir
+	script_name=$( basename "$script_dir" ); readonly script_name
+	hooks_dir=$( dirname "$script_dir" ); readonly hooks_dir
+	repository_dir=$( readlink -f "$hooks_dir/../.." ); readonly repository_dir
+
+	mapfile -t hooks < <( find "$repository_dir/git/hooks" -executable -type f -printf '%f\n' | sed '/install/d' )
+
+	while [[ "$#" -gt 0 ]]; do
+		local argument="$1"
+		shift
+
+		case "$argument" in
+			--help)
+				display_help_text
+				exit
+				;;
+			--*)
+				;&
+			-*)
+				abort "'$argument' is not a supported option"
+				;;
+			*)
+				abort "'$argument' is not a valid argument"
+				;;
+		esac
+	done
+
+	install_hooks "${hooks[@]}"
+}
+
+main "$@"
