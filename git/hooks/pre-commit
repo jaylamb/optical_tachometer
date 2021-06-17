@@ -71,7 +71,7 @@ function script_error_check()
 {
 	message "Checking for script errors ....... "
 
-	mapfile -t scripts < <( find "$repository_dir" -executable -type f | sed '/sample/d' | sed '/utility/d' )
+	mapfile -t scripts < <( find "$repository_dir" -executable -type f | sed '/sample/d' | sed '/build/d' )
 
 	if ! shellcheck --color=always --shell=bash "${scripts[@]}" >/dev/null 2>&1; then
 		echo "fail"
