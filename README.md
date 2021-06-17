@@ -24,15 +24,15 @@ The software has been tested on the [Adafruit Metro Mini
 
 To run the test program:
 
-    1. Create and navigate to a build directory:
+1. Create and navigate to a build directory:
 
     `cd build && mkdir build/`
 
-    2. Point CMake to the AVR toolchain file:
+2. Point CMake to the AVR toolchain file:
 
     `cmake -DCMAKE_TOOLCHAIN_FILE=../cmake_avr_functions.cmake ..`
 
-    3. Make and deploy the executable:
+3. Make and deploy the executable:
 
     `make upload_optical_tachometer`
 
