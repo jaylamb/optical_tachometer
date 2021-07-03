@@ -30,45 +30,36 @@
 
 int main( void ){
 
-uint32_t const TIMER_FREQUENCY = 2000000;
-int32_t frequency_ticks = 0;
-int32_t frequency_whole = 0;
-int32_t frequency_tenths = 0;
+static constexpr uint32_t TIMER_FREQUENCY  = 2000000;
+static           int32_t  frequency_ticks  = 0;
+static           int32_t  frequency_whole  = 0;
+static           int32_t  frequency_tenths = 0;
+static           char     frequency_string[20];
 
-char frequency_string[20];
-char uart_initialized_string[] = "UART Initialized.\n\r";
-char tach_initialized_string[] = "Tach Initialized.\n\r";
-char timeout_string[] = "Timed out.\n\r";
-char waiting_string[] = "Waiting for trigger.\n\r";
+static constexpr char timeout_string[] = ".";
 
 Tach optical_tachometer;
 
 uart_init();
-uart_send_string( uart_initialized_string );
-
 optical_tachometer.tach_init();
-uart_send_string( tach_initialized_string );
 
 sei();
 
     while (1) {
-
-        uart_send_string( waiting_string );
         if ( optical_tachometer.wait_for_tach_trigger())
         {
             frequency_ticks = optical_tachometer.read_tachometer();
             frequency_whole = TIMER_FREQUENCY / frequency_ticks;
             frequency_tenths = ( TIMER_FREQUENCY * 10 / frequency_ticks ) - ( frequency_whole * 10 );
 
-            sprintf( frequency_string, "%lu.%lu\n\r", frequency_whole, frequency_tenths);
+            sprintf( frequency_string, "%lu.%lu", frequency_whole, frequency_tenths);
             uart_send_string( frequency_string );
         } // if
         else
             uart_send_string( timeout_string );
 
-        _delay_ms( 2000 );
+        _delay_ms( 250 );
     } // while
 
 return( 0 );
-
 }
