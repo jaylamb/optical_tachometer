@@ -24,6 +24,7 @@ The software has been tested on the [Adafruit Metro Mini
 
 ![Optical Tachometer Test Program Outputs](./tach_test_program_output.jpg)
 
+### Building and Deploying the Test Software
 To build and deploy the test software to the microcontroller:
 
 1. Create and navigate to a build directory:
@@ -38,19 +39,20 @@ To build and deploy the test software to the microcontroller:
 
     `make upload_optical_tachometer`
 
-4a. View the output of the C++ test program by opening a serial terminal on the port
+### Viewing test Output
+1. View the output of the C++ test program by opening a serial terminal on the port
 connected to the microcontroller. The UART is configured to use a buad rate of 9600, 8N1
 by default.
 
-4b. Run the Python test program from the command line by navigating to the [Python
+2. Run the Python test program from the command line by navigating to the [Python
 tests](./test/python_test_program/) and invoking running the `serialtach.py` script:
 
-    `python3 serialtach.py`(Linux) or `py serialtach.py`(Windows)
+    `python3 serialtach.py` (Linux) or `py serialtach.py` (Windows)
 
-4c. Run the Python GUI test program from the command line by navigating to the [Python
+3. Run the Python GUI test program from the command line by navigating to the [Python
 tests](./test/python_test_program/) and invoking running the `serialtachgui.py` script:
 
-    `python3 serialtachgui.py`(Linux) or `py serialtachgui.py`(Windows)
+    `python3 serialtachgui.py` (Linux) or `py serialtachgui.py` (Windows)
 
 NOTE: By default, the python script is configured to use port `dev/ttyUSB0`.
 
