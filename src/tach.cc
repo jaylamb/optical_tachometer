@@ -82,7 +82,7 @@ void reset_timer( void )
 /**
  * \brief Interrupt service routine for external interrupt INT0.
  */
- ISR(INT0_vect)
+ ISR( INT0_vect )
  {
     measured_time = get_current_time();
 
@@ -94,7 +94,7 @@ void reset_timer( void )
 /**
  * \brief Interrupt service routine for Timer/Counter0 overflow.
  */
- ISR(TIMER0_OVF_vect)
+ ISR( TIMER0_OVF_vect )
  {
      overflow_count++;
  }
