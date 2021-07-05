@@ -21,7 +21,6 @@
 #include <string.h>
 
 #define BAUD 9600                                 // define baud
-
 #define BAUDRATE ((F_CPU)/(BAUD*16UL)-1)          // set baud rate value for UBRR
 
 void uart_init (void)
@@ -38,8 +37,12 @@ void uart_transmit( unsigned char data )
     UDR0 = data;                                  // place input character into tx buffer
 }
 
-void uart_send_string( char * const string )
+void uart_send_string( char const * string )
 {
+    static constexpr char delimeter = ':';
+
     for( size_t i = 0; i < strlen(string); i++ )
         uart_transmit( string[ i ] );
+
+    uart_transmit( delimeter );
 }
