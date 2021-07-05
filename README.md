@@ -24,7 +24,7 @@ The software indicates the detection of an object by triggering an external inte
 assigned to pin PD2.
 The [Adafruit Metro Mini 328](https://www.adafruit.com/product/2590) includes a
 [USB-to-UART Bridge](https://www.silabs.com/documents/public/data-sheets/cp2104.pdf),
-which makes serial data via the USB port.
+which makes a serial port available via the USB port.
 Serial data is transmitted from the microcontroller on pin PD1, and received by the
 microcontroller on pin PD0.
 
@@ -37,7 +37,7 @@ The following microcontroller interrupts are used by this software:
 ### Universal Synchronous and Asynchronous serial Receiver and Transmitter
 In addition to the previously listed items, this project's test program uses the
 microcontroller's Universal Synchronous and Asynchronous serial Receiver and Transmitter
-(USART) to transmit serial data.
+(USART0) to transmit serial data.
 The output data is parsed and/or displayed by all of the test programs.
 
 ## Test Programs
@@ -63,7 +63,7 @@ connected to the microcontroller following programming.
 The UART is configured to use a buad rate of 9600, 8N1 by default.
 The output of this program is a velocity measurement in Hertz, which includes a whole
 component and a tenths component.
-The stream of measurements is deleniated with semicolons (:).
+The stream of measurements is delineated with semicolons (:).
 A new measurement is transmitted every 0.25 seconds.
 
 ![Test Program Output - Raw](./tach_test_program_raw.png)
@@ -73,13 +73,13 @@ tests](./test/python_test_program/) and invoking running the `serialtach.py` scr
 
     `python3 serialtach.py` (Linux) or `py serialtach.py` (Windows)
 
-The output of this program is a velocity measurement in Hertz and Revolutions Per Minute
+The output of this program is a velocity measurement in Hertz _and_ revolutions per minute
 (RPM), output on a new line.
-Upon starting up, the program will indicate which serial port it is using, and will
-provide a complete list of the serial port's settings.
+Upon starting up, the program will indicate which serial port it is using and will provide
+a complete list of the serial port's settings.
 As with the C++ test program, a new reading is transmitted every 0.25 seconds.
 
-![Test Program Output - Python Terminal](./tach_test_program_python_terminal.jpg)
+![Test Program Output - Python Terminal](./tach_test_program_python_terminal.png)
 
 3. Run the Python GUI test program from the command line by navigating to the [Python
 tests](./test/python_test_program/) and invoking running the `serialtachgui.py` script:
@@ -90,9 +90,9 @@ When the program starts, a connection via the UART will be made automatically, a
 velocity data will refresh in the window as it is received.
 the `[Hz]/[RPM]` button can be used to toggle between units.
 
-![Test Program Output - Python GUI](./tach_test_program_python_gui.jpg)
+![Test Program Output - Python GUI](./tach_test_program_python_gui.png)
 
-_Note: By default, the python test programs are configured to use port `dev/ttyUSB0`._
+_Note: By default, the Python test programs are configured to use port `dev/ttyUSB0`._
 _The port is set_
 [here](https://github.com/jaylamb/optical_tachometer/blob/c85310b8fd87c4a67cde8b0a766c17109863f34e/test/python_test_program/serialtach.py#L9)
 _and should be changed if using another port is desired._
@@ -104,7 +104,7 @@ _and should be changed if using another port is desired._
 
 binutils-avr
 
-### Test Program Dependencies
+### Python Test Program Dependencies
 The Python test program was built in Python version 3.9.5, and requires
 [PySerial](https://pypi.org/project/pyserial/) and
 [tkinter](https://docs.python.org/3/library/tkinter.html).
